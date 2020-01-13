@@ -127,13 +127,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\FiltersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TypesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201912291350428_version1.cs" />
     <Compile Include="Migrations\201912291350428_version1.Designer.cs">
       <DependentUpon>201912291350428_version1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001112344530_version2.cs" />
+    <Compile Include="Migrations\202001112344530_version2.Designer.cs">
+      <DependentUpon>202001112344530_version2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -184,6 +190,16 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Types\Create.cshtml" />
+    <Content Include="Views\Types\Delete.cshtml" />
+    <Content Include="Views\Types\Details.cshtml" />
+    <Content Include="Views\Types\Edit.cshtml" />
+    <Content Include="Views\Types\Index.cshtml" />
+    <Content Include="Views\Filters\Create.cshtml" />
+    <Content Include="Views\Filters\Delete.cshtml" />
+    <Content Include="Views\Filters\Details.cshtml" />
+    <Content Include="Views\Filters\Edit.cshtml" />
+    <Content Include="Views\Filters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -204,6 +220,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201912291350428_version1.resx">
       <DependentUpon>201912291350428_version1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001112344530_version2.resx">
+      <DependentUpon>202001112344530_version2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

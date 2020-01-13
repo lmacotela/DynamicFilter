@@ -10,110 +10,109 @@ using DynamicFilter.Models;
 
 namespace DynamicFilter.Controllers
 {
-    public class CategoriesController : Controller
+    public class TypesController : Controller
     {
         private DataContext db = new DataContext();
 
-        // GET: Categories
+        // GET: Types
         public ActionResult Index()
         {
-            return View(db.Categories.Where(x=>x.Enable==true).ToList());
+            return View(db.Types.Where(x => x.Enable == true).ToList());
         }
 
-        // GET: Categories/Details/5
+        // GET: Types/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Models.Type type = db.Types.Find(id);
+            if (type == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(type);
         }
 
-        // GET: Categories/Create
+        // GET: Types/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: Types/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryID,Name,Enable")] Category category)
+        public ActionResult Create([Bind(Include = "TypeID,Name,Enable")] Models.Type type)
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                db.Types.Add(type);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(type);
         }
 
-        // GET: Categories/Edit/5
+        // GET: Types/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            Models.Type type = db.Types.Find(id);
+            if (type == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(type);
         }
 
-        // POST: Categories/Edit/5
+        // POST: Types/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryID,Name")] Category category)
+        public ActionResult Edit([Bind(Include = "TypeID,Name")] Models.Type type)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(type).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(type);
         }
 
-        // GET: Categories/Delete/5
+        // GET: Types/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-
-            if (category == null)
+            Models.Type type = db.Types.Find(id);
+            if (type == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(type);
         }
 
-        // POST: Categories/Delete/5
+        // POST: Types/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            //db.Categories.Remove(category);
-            category.Enable = false;
-            db.Entry(category).State = EntityState.Modified;            
+            Models.Type type = db.Types.Find(id);
+            //db.Types.Remove(type);
+            type.Enable = false;
+            db.Entry(type).State = EntityState.Modified;            
             db.SaveChanges();
             return RedirectToAction("Index");
         }
