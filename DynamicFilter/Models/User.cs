@@ -12,5 +12,12 @@ namespace DynamicFilter.Models
         public int Password { get; set; }
 
         public bool Enable { get; set; }
+
+        /// <summary>
+        /// Hacen referencia  a la llave foránea
+        /// </summary>
+        public int RoleID { get; set; }
+        public Role Role { get; set; }
+
     }
 }

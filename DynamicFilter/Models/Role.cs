@@ -5,10 +5,11 @@ using System.Web;
 
 namespace DynamicFilter.Models
 {
-    public class Type
+    public class Role
     {
-        public int TypeID { get; set; }
+        public int RoleID { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public bool Enable { get; set; }
     }
-}       
+}

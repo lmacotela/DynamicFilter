@@ -129,7 +129,9 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\FiltersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TypesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -141,10 +143,19 @@
     <Compile Include="Migrations\202001112344530_version2.Designer.cs">
       <DependentUpon>202001112344530_version2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001180323480_version3.cs" />
+    <Compile Include="Migrations\202001180323480_version3.Designer.cs">
+      <DependentUpon>202001180323480_version3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001180328113_version4.cs" />
+    <Compile Include="Migrations\202001180328113_version4.Designer.cs">
+      <DependentUpon>202001180328113_version4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\Filter.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -160,6 +171,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -200,6 +212,16 @@
     <Content Include="Views\Filters\Details.cshtml" />
     <Content Include="Views\Filters\Edit.cshtml" />
     <Content Include="Views\Filters\Index.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
+    <Content Include="Views\Roles\Details.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -223,6 +245,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001112344530_version2.resx">
       <DependentUpon>202001112344530_version2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001180323480_version3.resx">
+      <DependentUpon>202001180323480_version3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001180328113_version4.resx">
+      <DependentUpon>202001180328113_version4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
