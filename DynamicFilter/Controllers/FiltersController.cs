@@ -39,8 +39,8 @@ namespace DynamicFilter.Controllers
         // GET: Filters/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name");
-            ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Name");
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(x=>x.Enable==true), "CategoryID", "Name");
+            ViewBag.TypeID = new SelectList(db.Types.Where(x => x.Enable == true), "TypeID", "Name");
             return View();
         }
 
@@ -77,8 +77,8 @@ namespace DynamicFilter.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", filter.CategoryID);
-            ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Name", filter.TypeID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(x => x.Enable == true), "CategoryID", "Name", filter.CategoryID);
+            ViewBag.TypeID = new SelectList(db.Types.Where(x => x.Enable == true), "TypeID", "Name", filter.TypeID);
             return View(filter);
         }
 
@@ -95,8 +95,8 @@ namespace DynamicFilter.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", filter.CategoryID);
-            ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Name", filter.TypeID);
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(x=>x.Enable==true), "CategoryID", "Name", filter.CategoryID);
+            ViewBag.TypeID = new SelectList(db.Types.Where(x=>x.Enable==true), "TypeID", "Name", filter.TypeID);
             return View(filter);
         }
 

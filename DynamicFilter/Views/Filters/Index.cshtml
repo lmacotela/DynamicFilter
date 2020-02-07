@@ -75,19 +75,27 @@
                     },
                     {
                     targets: 5,
-                    render: function ( data, type, row ) {
-                        if (data.length>200) {
+                        render: function (data, type, row) { 
+                                                    
+                        if (data!=null) {
+                            if (data.length > 200) {
                                 data=data.substr(0, 200) + '…';
-                            }
+                            }                         
+                        }
                             return data;
                         }
+                        
                     },
                     {
                     targets: 4,
                         render: function (data, type, row) {
-                            if (data.length>100) {
+
+                            if (data!=null) {
+                                if (data.length > 100) {
                                 data=data.substr(0, 100) + '…';
                             }
+                            }
+                            
                             return data;
                         }
                     },
