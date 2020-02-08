@@ -17,7 +17,15 @@ namespace DynamicFilter.Controllers
         // GET: Types
         public ActionResult Index()
         {
-            return View(db.Types.Where(x => x.Enable == true).ToList());
+            if (Session["UserID"] != null)
+            {
+                return View(db.Types.Where(x => x.Enable == true).ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            
         }
 
         // GET: Types/Details/5
@@ -46,10 +54,11 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TypeID,Name,Enable")] Models.Type type)
+        public ActionResult Create([Bind(Include = "TypeID,Name")] Models.Type type)
         {
             if (ModelState.IsValid)
             {
+                type.Enable = true;
                 db.Types.Add(type);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -109,8 +118,7 @@ namespace DynamicFilter.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Models.Type type = db.Types.Find(id);
-            //db.Types.Remove(type);
+            Models.Type type = db.Types.Find(id);            
             type.Enable = false;
             db.Entry(type).State = EntityState.Modified;            
             db.SaveChanges();

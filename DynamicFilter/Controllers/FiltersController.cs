@@ -17,8 +17,16 @@ namespace DynamicFilter.Controllers
         // GET: Filters
         public ActionResult Index()
         {
-            var filters = db.Filters.Include(f => f.Category).Include(f => f.Type).Where(x => x.Enable == true);
-            return View(filters.ToList());
+            if (Session["UserID"] != null)
+            {
+                var filters = db.Filters.Include(f => f.Category).Include(f => f.Type).Where(x => x.Enable == true);
+                return View(filters.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+          
         }
 
         // GET: Filters/Details/5
@@ -91,7 +99,9 @@ namespace DynamicFilter.Controllers
         {
             if (ModelState.IsValid)
             {
+                filter.CreatedOn = DateTime.Today;
                 db.Entry(filter).State = EntityState.Modified;
+                                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

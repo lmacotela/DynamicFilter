@@ -18,13 +18,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Dynamic Filters", "Index", "Filters", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Filters", "Index", "Filters")</li>
                     <li>@Html.ActionLink("Category", "Index", "Categories")</li>
                     <li>@Html.ActionLink("Type", "Index", "Types")</li>
-                    @*<li>@Html.ActionLink("User", "Index", "Users")</li>*@
+                    <li>@Html.ActionLink("User", "Index", "Users")</li>
+                    <li>@Html.ActionLink("Role", "Index", "Roles")</li>
                 </ul>
             </div>
         </div>

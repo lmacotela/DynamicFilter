@@ -17,8 +17,16 @@ namespace DynamicFilter.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.Role).Where(x=>x.Enable==true);
-            return View(users.ToList());
+            if (Session["UserID"] != null)
+            {
+                var users = db.Users.Include(u => u.Role).Where(x => x.Enable == true);
+                return View(users.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            
         }
 
         // GET: Users/Details/5
@@ -39,7 +47,7 @@ namespace DynamicFilter.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name");
+            ViewBag.RoleID = new SelectList(db.Roles.Where(x=>x.Enable==true), "RoleID", "Name");
             return View();
         }
 
@@ -48,7 +56,7 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,User_,Password,RoleID")] User user)
+        public ActionResult Create([Bind(Include = "UserID,UserName,Password,Enable,RoleID")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +82,7 @@ namespace DynamicFilter.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", user.RoleID);
+            ViewBag.RoleID = new SelectList(db.Roles.Where(x=>x.Enable), "RoleID", "Name", user.RoleID);
             return View(user);
         }
 
@@ -83,7 +91,7 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,User_,Password,Enable,RoleID")] User user)
+        public ActionResult Edit([Bind(Include = "UserID,UserName,Password,RoleID")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +99,7 @@ namespace DynamicFilter.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "Name", user.RoleID);
+            ViewBag.RoleID = new SelectList(db.Roles.Where(x=>x.Enable==true), "RoleID", "Name", user.RoleID);
             return View(user);
         }
 
@@ -116,10 +124,7 @@ namespace DynamicFilter.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             User user = db.Users.Find(id);
-            user.Enable = false;
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-            //db.Users.Remove(user);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

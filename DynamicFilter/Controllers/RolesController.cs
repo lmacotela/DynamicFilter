@@ -17,7 +17,15 @@ namespace DynamicFilter.Controllers
         // GET: Roles
         public ActionResult Index()
         {
-            return View(db.Roles.ToList());
+            if (Session["UserID"] != null)
+            {
+                return View(db.Roles.Where(x => x.Enable == true).ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            
         }
 
         // GET: Roles/Details/5
@@ -50,6 +58,7 @@ namespace DynamicFilter.Controllers
         {
             if (ModelState.IsValid)
             {
+                role.Enable = true;
                 db.Roles.Add(role);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,7 +87,7 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RoleID,Name,Description,Enable")] Role role)
+        public ActionResult Edit([Bind(Include = "RoleID,Name,Description")] Role role)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +106,7 @@ namespace DynamicFilter.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Role role = db.Roles.Find(id);
+
             if (role == null)
             {
                 return HttpNotFound();
@@ -110,7 +120,8 @@ namespace DynamicFilter.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Role role = db.Roles.Find(id);
-            db.Roles.Remove(role);
+            role.Enable = false;
+            db.Entry(role).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

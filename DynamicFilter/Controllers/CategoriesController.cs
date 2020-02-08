@@ -17,7 +17,15 @@ namespace DynamicFilter.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            return View(db.Categories.Where(x=>x.Enable==true).ToList());
+            if (Session["UserID"] != null)
+            {
+                return View(db.Categories.Where(x => x.Enable == true).ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            
         }
 
         // GET: Categories/Details/5
@@ -50,7 +58,9 @@ namespace DynamicFilter.Controllers
         {
             if (ModelState.IsValid)
             {
+                category.Enable = true;
                 db.Categories.Add(category);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -110,8 +120,7 @@ namespace DynamicFilter.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            //db.Categories.Remove(category);
+            Category category = db.Categories.Find(id);            
             category.Enable = false;
             db.Entry(category).State = EntityState.Modified;            
             db.SaveChanges();

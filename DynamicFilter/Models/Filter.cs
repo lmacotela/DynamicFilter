@@ -12,12 +12,12 @@ namespace DynamicFilter.Models
         public int FilterID { get; set; }
         
         [Column(TypeName = "ntext")]
-        [MaxLength]
+        //[MaxLength]
         public string Description { get; set; }
         public string Place { get; set; }
 
         [Column(TypeName = "ntext")]
-        [MaxLength]
+        //[MaxLength]
         public string Detail { get; set; }
         public DateTime CreatedOn { get; set; }
         public bool Enable { get; set; }
