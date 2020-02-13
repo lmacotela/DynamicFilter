@@ -104,7 +104,8 @@ namespace DynamicFilter.Controllers
             if (ModelState.IsValid)
             {
                 filter.CreatedOn = DateTime.Today;
-                filter.Enable = true;                
+                filter.Enable = true;
+                filter.CreatedBy = Convert.ToInt32(Session["UserID"]);
                 db.Entry(filter).State = EntityState.Modified;
                                 
                 db.SaveChanges();
