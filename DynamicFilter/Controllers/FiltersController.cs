@@ -19,7 +19,10 @@ namespace DynamicFilter.Controllers
         {
             if (Session["UserID"] != null)
             {
-                var filters = db.Filters.Include(f => f.Category).Include(f => f.Type).Where(x => x.Enable == true);
+                int UserId = Convert.ToInt32(Session["UserID"]);
+
+                var filters = db.Filters.Include(f => f.Category).Include(f => f.Type)
+                    .Where(x => x.Enable == true && x.CreatedBy == UserId);
                 return View(filters.ToList());
             }
             else
@@ -27,7 +30,7 @@ namespace DynamicFilter.Controllers
                 return RedirectToAction("Login", "Home");
             }
           
-        }
+        }   
 
         // GET: Filters/Details/5
         public ActionResult Details(int? id)
@@ -63,6 +66,7 @@ namespace DynamicFilter.Controllers
             {
                 filter.Enable = true;
                 filter.CreatedOn = DateTime.Today;
+                filter.CreatedBy = Convert.ToInt32(Session["UserID"]);
                 db.Filters.Add(filter);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -100,6 +104,7 @@ namespace DynamicFilter.Controllers
             if (ModelState.IsValid)
             {
                 filter.CreatedOn = DateTime.Today;
+                filter.Enable = true;                
                 db.Entry(filter).State = EntityState.Modified;
                                 
                 db.SaveChanges();
@@ -152,15 +157,20 @@ namespace DynamicFilter.Controllers
         [HttpPost]
         public JsonResult Get()
         {
-
-            var list = db.Filters.Include("Category").Include("Type").Where(x => x.Enable == true).ToList();
-            return Json(new
-            {
-                draw = 1,
-                recordsTotal = list.Count,
-                recordsFiltered = list.Count,
-                data = list
-            });
+            
+                int UserId = Session["UserID"]==null ?0: Convert.ToInt32(Session["UserID"]);
+                
+                var list = db.Filters.Include("Category").Include("Type").
+                    Where(x => x.Enable == true && x.CreatedBy==UserId ).ToList();
+              
+                return Json(new
+                {
+                    draw = 1,
+                    recordsTotal = list.Count,
+                    recordsFiltered = list.Count,
+                    data = list
+                });
+          
         }
     }
 }
