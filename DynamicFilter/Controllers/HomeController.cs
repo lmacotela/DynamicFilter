@@ -52,6 +52,7 @@ namespace DynamicFilter.Controllers
                     {
                         Session["UserID"] = obj.UserID.ToString();
                         Session["UserName"] = obj.UserName.ToString();
+                    Session["RoleID"] = obj.RoleID.ToString();
                     return RedirectToAction("Index", "Filters");
                     }
 

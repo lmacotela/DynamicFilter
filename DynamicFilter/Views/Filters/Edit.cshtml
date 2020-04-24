@@ -25,7 +25,7 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Application", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
@@ -33,7 +33,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.TypeID, "TypeID", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Function", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("TypeID", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
@@ -41,7 +41,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
             @*@Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })*@
@@ -60,7 +60,7 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Detail, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Solution", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @*@Html.TextArea("Detail", new { htmlAttributes = new { @class = "form-control" } })*@
             @Html.TextAreaFor(m => m.Detail, new { @class = "form-control" })

@@ -20,9 +20,13 @@ namespace DynamicFilter.Controllers
             if (Session["UserID"] != null)
             {
                 int UserId = Convert.ToInt32(Session["UserID"]);
+                int RoleId = Convert.ToInt32(Session["RoleID"]);
 
-                var filters = db.Filters.Include(f => f.Category).Include(f => f.Type)
-                    .Where(x => x.Enable == true && x.CreatedBy == UserId);
+                var filters = db.Filters
+                    .Include(f => f.Category)
+                    .Include(f => f.Type)                    
+                    .Where(x => x.Enable == true && (x.CreatedBy == UserId|| RoleId==1)
+                    ).OrderByDescending(x => x.FilterID);
                 return View(filters.ToList());
             }
             else
@@ -160,9 +164,11 @@ namespace DynamicFilter.Controllers
         {
             
                 int UserId = Session["UserID"]==null ?0: Convert.ToInt32(Session["UserID"]);
-                
-                var list = db.Filters.Include("Category").Include("Type").
-                    Where(x => x.Enable == true && x.CreatedBy==UserId ).ToList();
+            int RoleId = Convert.ToInt32(Session["RoleID"]);
+
+            var list = db.Filters.Include("Category").Include("Type").
+                    Where(x => x.Enable == true &&( x.CreatedBy==UserId || RoleId==1 ))
+                    .OrderByDescending(x=>x.FilterID) .ToList();
               
                 return Json(new
                 {

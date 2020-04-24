@@ -16,12 +16,13 @@
     <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>FilterID</th>
-                <th>Category</th>
-                <th>Type</th>
-                <th>Place</th>
+                <th>Ticket</th>
+                <th>Application</th>
+                <th>Function</th>
+                <th>Title</th>
                 <th>Description</th>
-                <th>Detail</th>
+                <th>Description2</th>
+                <th>Solution</th>
                 <th>Detail2</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -46,12 +47,14 @@
                     "url": "@Url.Action("Get","Filters")",
                     "type": "POST"
                 },
+                "order": [[1, "desc"]],
                 "columns": [
                     { "data": "FilterID"},
                     { "data": "Category.Name" },
                     { "data": "Type.Name" },
                     { "data": "Place" },
-                    { "data": "Description"},
+                    { "data": "Description" },
+                    { "data": "Description" },
                     { "data": "Detail" },
                     { "data": "Detail" },
                     { "data": "FilterID" },
@@ -60,25 +63,25 @@
                 ],
                 columnDefs: [
                     {
-                    targets: 8,
+                    targets: 9,
                     render: function ( data, type, row ) {                                                
                         var url = '@Html.ActionLink("Delete", "Delete", new { id=1 })';
                         return url.replace('1',data); 
                         }
                     },
                     {
-                    targets: 7,
+                    targets: 8,
                     render: function ( data, type, row ) {                                                
                         var url = '@Html.ActionLink("Edit", "Edit", new { id=1 })';
                         return url.replace('1',data); 
                         }
                     },
                     {
-                        targets: 6,                    
+                        targets: 7,                    
                         visible:false
                     },
                     {
-                    targets: 5,
+                    targets: 6,
                         render: function (data, type, row) { 
                                                     
                         if (data!=null) {
@@ -102,6 +105,10 @@
                             
                             return data;
                         }
+                    },
+                    {
+                        targets: 5,
+                        visible: false
                     },
                  ]
             });
