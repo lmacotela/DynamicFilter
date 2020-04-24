@@ -20,12 +20,13 @@ namespace DynamicFilter.Models
         //[MaxLength]
         public string Detail { get; set; }
         public DateTime CreatedOn { get; set; }
+        
 
-        
+
         public int CreatedBy { get; set; }
-        
+
         [ForeignKey("CreatedBy")]
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
 
         public bool Enable { get; set; }

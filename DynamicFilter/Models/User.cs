@@ -19,5 +19,7 @@ namespace DynamicFilter.Models
         public int RoleID { get; set; }
         public Role Role { get; set; }
 
+        //public virtual List<Filter> Filters { get; set; }
+
     }
 }

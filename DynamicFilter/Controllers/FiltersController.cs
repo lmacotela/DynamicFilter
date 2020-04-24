@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
 using DynamicFilter.Models;
@@ -19,15 +20,17 @@ namespace DynamicFilter.Controllers
         {
             if (Session["UserID"] != null)
             {
-                int UserId = Convert.ToInt32(Session["UserID"]);
-                int RoleId = Convert.ToInt32(Session["RoleID"]);
+                //int UserId = Convert.ToInt32(Session["UserID"]);
+                //int RoleId = Convert.ToInt32(Session["RoleID"]);
 
-                var filters = db.Filters
-                    .Include(f => f.Category)
-                    .Include(f => f.Type)                    
-                    .Where(x => x.Enable == true && (x.CreatedBy == UserId|| RoleId==1)
-                    ).OrderByDescending(x => x.FilterID);
-                return View(filters.ToList());
+                //var filters = db.Filters
+                //    .Include(f => f.Category)
+                //    .Include(f => f.Type)                    
+                //    .Where(x => x.Enable == 
+                //    true && (x.CreatedBy == UserId || RoleId==1)
+                //    ).OrderByDescending(x => x.FilterID);
+                //return View(filters.ToList());
+                return View();
             }
             else
             {
@@ -107,11 +110,15 @@ namespace DynamicFilter.Controllers
         {
             if (ModelState.IsValid)
             {
-                filter.CreatedOn = DateTime.Today;
-                filter.Enable = true;
-                filter.CreatedBy = Convert.ToInt32(Session["UserID"]);
-                db.Entry(filter).State = EntityState.Modified;
+                Models.Filter model = db.Filters.Find(filter.FilterID);
+
+                model.Description = filter.Description;
+                model.Place = filter.Place;
+                model.Detail = filter.Detail;
+                model.CategoryID = filter.CategoryID;
+                model.TypeID = filter.TypeID;
                                 
+                db.Entry(model).State = EntityState.Modified;                                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -166,8 +173,10 @@ namespace DynamicFilter.Controllers
                 int UserId = Session["UserID"]==null ?0: Convert.ToInt32(Session["UserID"]);
             int RoleId = Convert.ToInt32(Session["RoleID"]);
 
-            var list = db.Filters.Include("Category").Include("Type").
-                    Where(x => x.Enable == true &&( x.CreatedBy==UserId || RoleId==1 ))
+            var list = db.Filters.Include("Category").Include("Type").Include("User").
+                    Where(x => x.Enable == true 
+                    &&( x.CreatedBy==UserId || RoleId==1 )
+                    )
                     .OrderByDescending(x=>x.FilterID) .ToList();
               
                 return Json(new

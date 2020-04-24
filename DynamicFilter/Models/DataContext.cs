@@ -11,6 +11,7 @@ namespace DynamicFilter.Models
         public DataContext() : base("name= DefaultConnection")
         {
             this.Configuration.LazyLoadingEnabled = true;
+            
         }
 
         public DbSet<Category> Categories { get; set; }

@@ -24,6 +24,7 @@
                 <th>Description2</th>
                 <th>Solution</th>
                 <th>Detail2</th>
+                <th>CreatedBy</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -57,20 +58,21 @@
                     { "data": "Description" },
                     { "data": "Detail" },
                     { "data": "Detail" },
+                    { "data": "User.UserName" },
                     { "data": "FilterID" },
                     { "data": "FilterID"},
 
                 ],
                 columnDefs: [
                     {
-                    targets: 9,
+                    targets: 10,
                     render: function ( data, type, row ) {                                                
                         var url = '@Html.ActionLink("Delete", "Delete", new { id=1 })';
                         return url.replace('1',data); 
                         }
                     },
                     {
-                    targets: 8,
+                    targets: 9,
                     render: function ( data, type, row ) {                                                
                         var url = '@Html.ActionLink("Edit", "Edit", new { id=1 })';
                         return url.replace('1',data); 
