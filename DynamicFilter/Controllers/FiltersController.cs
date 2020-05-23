@@ -74,6 +74,7 @@ namespace DynamicFilter.Controllers
                 filter.Enable = true;
                 filter.CreatedOn = DateTime.Today;
                 filter.CreatedBy = Convert.ToInt32(Session["UserID"]);
+                filter.StateID = 1;
                 db.Filters.Add(filter);
                 db.SaveChanges();
                 return RedirectToAction("Index");
