@@ -169,11 +169,16 @@
     <Compile Include="Migrations\202004241749593_version9.Designer.cs">
       <DependentUpon>202004241749593_version9.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005231811185_v10.cs" />
+    <Compile Include="Migrations\202005231811185_v10.Designer.cs">
+      <DependentUpon>202005231811185_v10.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -287,6 +292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004241749593_version9.resx">
       <DependentUpon>202004241749593_version9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005231811185_v10.resx">
+      <DependentUpon>202005231811185_v10.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

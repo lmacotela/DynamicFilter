@@ -22,5 +22,7 @@ namespace DynamicFilter.Models
 
         public DbSet<Role> Roles { get; set; }
 
+        public DbSet<State> States { get; set; }
+
     }
 }

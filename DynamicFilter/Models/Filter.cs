@@ -38,5 +38,8 @@ namespace DynamicFilter.Models
         public int TypeID { get; set; }
         public Type Type { get; set; }
 
+        public int StateID { get; set; }
+        public State State { get; set; }
+
     }
 }
