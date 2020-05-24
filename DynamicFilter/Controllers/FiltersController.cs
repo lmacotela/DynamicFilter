@@ -111,7 +111,7 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID")] Models.Filter filter,
+        public ActionResult Edit([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID,StateID")] Models.Filter filter,
             string enviar
             )
         {
@@ -124,7 +124,14 @@ namespace DynamicFilter.Controllers
                 model.Detail = filter.Detail;
                 model.CategoryID = filter.CategoryID;
                 model.TypeID = filter.TypeID;
-                model.StateID = filter.StateID;
+                if(enviar=="Save")
+                {
+                    model.StateID = 2;
+                }
+                else
+                {
+                    model.StateID = 3;
+                }
                                 
                 db.Entry(model).State = EntityState.Modified;                                
                 db.SaveChanges();
