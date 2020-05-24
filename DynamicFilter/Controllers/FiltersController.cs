@@ -111,7 +111,9 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID,StateID")] Models.Filter filter)
+        public ActionResult Edit([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID")] Models.Filter filter,
+            string enviar
+            )
         {
             if (ModelState.IsValid)
             {
