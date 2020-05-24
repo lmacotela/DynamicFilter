@@ -7,6 +7,7 @@
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")    
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
     <style type="text/css">
         textarea {
@@ -30,8 +31,9 @@
                     <li>@Html.ActionLink("Tickets", "Index", "Filters")</li>
                     <li>@Html.ActionLink("Applications", "Index", "Categories")</li>
                     <li>@Html.ActionLink("Functions", "Index", "Types")</li>
+                    <li>@Html.ActionLink("State", "Index", "State")</li>
                     @*<li>@Html.ActionLink("Users", "Index", "Users")</li>
-                    <li>@Html.ActionLink("Roles", "Index", "Roles")</li>*@
+                        <li>@Html.ActionLink("Roles", "Index", "Roles")</li>*@
                 </ul>
             </div>
         </div>
@@ -46,6 +48,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ValidaControles")
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>

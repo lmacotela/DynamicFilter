@@ -19,6 +19,7 @@
                 <th>Ticket</th>
                 <th>Application</th>
                 <th>Function</th>
+                <th>State</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Description2</th>
@@ -53,6 +54,7 @@
                     { "data": "FilterID"},
                     { "data": "Category.Name" },
                     { "data": "Type.Name" },
+                    { "data": "State.Name" },
                     { "data": "Place" },
                     { "data": "Description" },
                     { "data": "Description" },
@@ -65,30 +67,30 @@
                 ],
                 columnDefs: [
                     {
-                    targets: 10,
+                    targets: 11,
                     render: function ( data, type, row ) {                                                
                         var url = '@Html.ActionLink("Delete", "Delete", new { id=1 })';
                         return url.replace('1',data); 
                         }
                     },
                     {
-                    targets: 9,
+                    targets: 10,
                     render: function ( data, type, row ) {                                                
                         var url = '@Html.ActionLink("Edit", "Edit", new { id=1 })';
                         return url.replace('1',data); 
                         }
                     },
                     {
-                        targets: 7,                    
+                        targets: 8,                    
                         visible:false
                     },
                     {
-                    targets: 6,
+                    targets: 7,
                         render: function (data, type, row) { 
                                                     
                         if (data!=null) {
-                            if (data.length > 20) {
-                                data=data.substr(0, 20) + '…';
+                            if (data.length > 21) {
+                                data=data.substr(0, 21) + '…';
                             }                         
                         }
                             return data;
@@ -100,8 +102,8 @@
                         render: function (data, type, row) {
 
                             if (data!=null) {
-                                if (data.length > 20) {
-                                data=data.substr(0, 20) + '…';
+                                if (data.length > 21) {
+                                data=data.substr(0, 21) + '…';
                             }
                             }
                             
@@ -109,7 +111,7 @@
                         }
                     },
                     {
-                        targets: 5,
+                        targets: 6,
                         visible: false
                     },
                  ]

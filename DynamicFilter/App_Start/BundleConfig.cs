@@ -25,6 +25,9 @@ namespace DynamicFilter
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            //Archivo JS para el manejo de controles
+            bundles.Add(new ScriptBundle("~/bundles/ValidaControles").Include(
+                "~/Scripts/ControlesValidacion.js"));
         }
     }
 }

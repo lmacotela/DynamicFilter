@@ -59,6 +59,8 @@ namespace DynamicFilter.Controllers
         {
             ViewBag.CategoryID = new SelectList(db.Categories.Where(x=>x.Enable==true), "CategoryID", "Name");
             ViewBag.TypeID = new SelectList(db.Types.Where(x => x.Enable == true), "TypeID", "Name");
+            ViewBag.StateID = new SelectList(db.States.Where(x => x.Enable == true), "StateID", "Name");
+
             return View();
         }
 
@@ -67,7 +69,7 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID")] Models.Filter filter)
+        public ActionResult Create([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID,StateID")] Models.Filter filter)
         {
             if (ModelState.IsValid)
             {
@@ -82,6 +84,7 @@ namespace DynamicFilter.Controllers
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", filter.CategoryID);
             ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Name", filter.TypeID);
+            ViewBag.StateID = new SelectList(db.States, "StateID", "Name", filter.StateID);
             return View(filter);
         }
 
@@ -99,6 +102,7 @@ namespace DynamicFilter.Controllers
             }
             ViewBag.CategoryID = new SelectList(db.Categories.Where(x => x.Enable == true), "CategoryID", "Name", filter.CategoryID);
             ViewBag.TypeID = new SelectList(db.Types.Where(x => x.Enable == true), "TypeID", "Name", filter.TypeID);
+            ViewBag.StateID = new SelectList(db.States.Where(x => x.Enable == true), "StateID", "Name", filter.StateID);
             return View(filter);
         }
 
@@ -107,7 +111,7 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID")] Models.Filter filter)
+        public ActionResult Edit([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID,StateID")] Models.Filter filter)
         {
             if (ModelState.IsValid)
             {
@@ -118,6 +122,7 @@ namespace DynamicFilter.Controllers
                 model.Detail = filter.Detail;
                 model.CategoryID = filter.CategoryID;
                 model.TypeID = filter.TypeID;
+                model.StateID = filter.StateID;
                                 
                 db.Entry(model).State = EntityState.Modified;                                
                 db.SaveChanges();
@@ -125,6 +130,7 @@ namespace DynamicFilter.Controllers
             }
             ViewBag.CategoryID = new SelectList(db.Categories.Where(x=>x.Enable==true), "CategoryID", "Name", filter.CategoryID);
             ViewBag.TypeID = new SelectList(db.Types.Where(x=>x.Enable==true), "TypeID", "Name", filter.TypeID);
+            ViewBag.StateID = new SelectList(db.States.Where(x => x.Enable == true), "StateID", "Name", filter.StateID);
             return View(filter);
         }
 
@@ -174,7 +180,7 @@ namespace DynamicFilter.Controllers
                 int UserId = Session["UserID"]==null ?0: Convert.ToInt32(Session["UserID"]);
             int RoleId = Convert.ToInt32(Session["RoleID"]);
 
-            var list = db.Filters.Include("Category").Include("Type").Include("User").
+            var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").
                     Where(x => x.Enable == true 
                     &&( x.CreatedBy==UserId || RoleId==1 )
                     )
