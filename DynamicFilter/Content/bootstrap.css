@@ -6225,6 +6225,7 @@ button.close {
 }
 .popover > .arrow {
   border-width: 11px;
+
 }
 .popover > .arrow,
 .popover > .arrow:after {
@@ -6830,5 +6831,9 @@ button.close {
   .hidden-print {
     display: none !important;
   }
+}
+
+.labelOcultar {
+    display: none;
 }
 /*# sourceMappingURL=bootstrap.css.map */

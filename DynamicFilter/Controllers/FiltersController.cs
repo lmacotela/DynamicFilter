@@ -131,6 +131,7 @@ namespace DynamicFilter.Controllers
             ViewBag.CategoryID = new SelectList(db.Categories.Where(x=>x.Enable==true), "CategoryID", "Name", filter.CategoryID);
             ViewBag.TypeID = new SelectList(db.Types.Where(x=>x.Enable==true), "TypeID", "Name", filter.TypeID);
             ViewBag.StateID = new SelectList(db.States.Where(x => x.Enable == true), "StateID", "Name", filter.StateID);
+            
             return View(filter);
         }
 
