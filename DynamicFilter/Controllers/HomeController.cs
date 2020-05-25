@@ -45,7 +45,6 @@ namespace DynamicFilter.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var obj = db.Users.Where(x => x.UserName == objUser.UserName && x.Password == objUser.Password).FirstOrDefault();
                 
                     if (obj != null)

@@ -8,11 +8,15 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
+using DynamicFilter.DTO;
 using DynamicFilter.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace DynamicFilter.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class FiltersController : Controller
     {
         private DataContext db = new DataContext();
@@ -88,6 +92,83 @@ namespace DynamicFilter.Controllers
             ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Name", filter.TypeID);
             ViewBag.StateID = new SelectList(db.States, "StateID", "Name", filter.StateID);
             return View(filter);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> CreateTicketAndUser(Ticket ticket)
+        {
+            var response = new { issuccess = false, message = ""};
+
+            try
+            {
+                if (!await ValidateAndInsertOrUpdateUser(ticket.User))
+                {
+                    response = new{ issuccess = false, message = "Error al validar usuario"};
+                    return Json(response, JsonRequestBehavior.AllowGet);
+                }
+
+                if(!await createTicket(ticket.Filter))
+                {
+                    response = new { issuccess = false, message = "Error al registrar consulta"};
+                    return Json(response, JsonRequestBehavior.AllowGet);
+                }
+
+                response = new { issuccess = true, message = "Consulta registrada correctamente"};
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                response = new{ issuccess = false, message = ex.Message };
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        private async Task<bool> createTicket(Models.Filter filter)
+        {
+            try
+            {
+                filter.Enable = true;
+                filter.CreatedOn = DateTime.Today;
+                filter.CategoryID = 4;
+                db.Filters.Add(filter);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        private async Task<bool> ValidateAndInsertOrUpdateUser(Models.User user)
+        {
+            try
+            {
+                var proveedor = db.Users.Where(x => x.UserName == user.UserName).FirstOrDefault();
+                if (proveedor == null )
+                {
+                    user.Enable = true;
+                    user.Password = string.Empty;
+                    user.RoleID = 2;
+                    db.Users.Add(user);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    Models.User usuario = db.Users.Where(x => x.UserName == user.UserName).FirstOrDefault();
+                    db.Entry(usuario).State = EntityState.Modified;
+                    usuario.UserName = user.UserName;
+                    usuario.ProveedorID = user.ProveedorID;
+                    usuario.ProviderName = user.ProviderName;
+                    usuario.ContactPerson = user.ContactPerson;
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         [HttpPost]

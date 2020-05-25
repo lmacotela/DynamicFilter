@@ -10,4 +10,5 @@ namespace DynamicFilter
             filters.Add(new HandleErrorAttribute());
         }
     }
+   
 }
