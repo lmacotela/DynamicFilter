@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DynamicFilter.Models;
@@ -36,8 +38,8 @@ namespace DynamicFilter.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-          
-        }   
+
+        }
 
         // GET: Filters/Details/5
         public ActionResult Details(int? id)
@@ -57,7 +59,7 @@ namespace DynamicFilter.Controllers
         // GET: Filters/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList(db.Categories.Where(x=>x.Enable==true), "CategoryID", "Name");
+            ViewBag.CategoryID = new SelectList(db.Categories.Where(x => x.Enable == true), "CategoryID", "Name");
             ViewBag.TypeID = new SelectList(db.Types.Where(x => x.Enable == true), "TypeID", "Name");
             ViewBag.StateID = new SelectList(db.States.Where(x => x.Enable == true), "StateID", "Name");
 
@@ -86,6 +88,58 @@ namespace DynamicFilter.Controllers
             ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Name", filter.TypeID);
             ViewBag.StateID = new SelectList(db.States, "StateID", "Name", filter.StateID);
             return View(filter);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create_Ticket([Bind(Include = "Description,Place,Detail,CategoryID,TypeID,CreatedBy,StateID,User")] Models.Filter filter)
+        {
+            if (ModelState.IsValid)
+            {
+                filter.Enable = true;
+                filter.CreatedOn = DateTime.Today;
+                db.Filters.Add(filter);
+                await db.SaveChangesAsync();
+                return new HttpStatusCodeResult(HttpStatusCode.Created);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+
+        /// <summary>
+        /// Creacion de Metodo Create_Proveedor
+        /// </summary>
+        [HttpPost]
+        public async Task<ActionResult> Create_Proveedor([Bind(Include = "Password, Enable, RoleID, UserName, ProveedorID")] Models.User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var proveedor = db.Users.Where(x => x.UserName == user.UserName).FirstOrDefault();
+                if (proveedor == null)
+                {
+                    db.Users.Add(user);
+                    await db.SaveChangesAsync();
+                    return new HttpStatusCodeResult(HttpStatusCode.Created);
+                }
+                else
+                {
+                    Models.User usuario = db.Users.Find(proveedor.UserID);
+                    usuario.Password = user.Password;
+                    usuario.Enable = user.Enable;
+                    usuario.RoleID = user.RoleID;
+                    usuario.UserName = user.UserName;
+                    usuario.ProveedorID = user.ProveedorID;
+                    db.Entry(usuario).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
         }
 
         // GET: Filters/Edit/5

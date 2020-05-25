@@ -34,7 +34,6 @@
 </div>
 
 
-
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
@@ -63,39 +62,39 @@
                     { "data": "User.UserName" },
                     { "data": "FilterID" },
                     { "data": "FilterID"},
-
                 ],
                 columnDefs: [
                     {
                     targets: 11,
-                    render: function ( data, type, row ) {                                                
+                        render: function (data, type, row) {
                         var url = '@Html.ActionLink("Delete", "Delete", new { id=1 })';
-                        return url.replace('1',data); 
+                        return url.replace('1',data);
                         }
                     },
                     {
                     targets: 10,
-                    render: function ( data, type, row ) {                                                
-                        var url = '@Html.ActionLink("Edit", "Edit", new { id=1 })';
-                        return url.replace('1',data); 
+                        render: function (data, type, row) {
+                            var url;
+                                url= '@Html.ActionLink("Edit", "Edit", new { id=1 })';
+                            return url.replace('1',data);
                         }
                     },
                     {
-                        targets: 8,                    
+                        targets: 8,
                         visible:false
                     },
                     {
                     targets: 7,
-                        render: function (data, type, row) { 
-                                                    
+                        render: function (data, type, row) {
+
                         if (data!=null) {
                             if (data.length > 21) {
                                 data=data.substr(0, 21) + '…';
-                            }                         
+                            }
                         }
                             return data;
                         }
-                        
+
                     },
                     {
                     targets: 4,
@@ -106,7 +105,7 @@
                                 data=data.substr(0, 21) + '…';
                             }
                             }
-                            
+
                             return data;
                         }
                     },
