@@ -173,8 +173,10 @@ namespace DynamicFilter.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create_Ticket([Bind(Include = "Description,Place,Detail,CategoryID,TypeID,CreatedBy,StateID,User")] Models.Filter filter)
+        public async Task<ActionResult> Create_Ticket([Bind(Include = "Description,Place,Detail,CategoryID,TypeID,CreatedBy,StateID,UserName")] Models.Filter filter)
         {
+            
+           // string UserName = filter.User.UserName.ToString();
             if (ModelState.IsValid)
             {
                 filter.Enable = true;

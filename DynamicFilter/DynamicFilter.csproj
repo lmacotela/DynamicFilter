@@ -143,7 +143,6 @@
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\TypesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="DTO\Ticket.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
