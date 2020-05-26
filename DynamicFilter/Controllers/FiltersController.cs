@@ -380,9 +380,8 @@ namespace DynamicFilter.Controllers
             int RoleId = Convert.ToInt32(Session["RoleID"]);
 
             var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").
-                    Where(x => x.Enable == true 
-                    )
-                    .OrderByDescending(x=>x.FilterID) .ToList();
+                    Where(x => x.Enable == true)
+                    .OrderByDescending(x=>x.FilterID).ToList();
               
                 return Json(new
                 {

@@ -60,7 +60,18 @@
                     { "data": "Detail" },
                     { "data": "Detail" },
                     { "data": "User.UserName" },
-                    { "data": "FilterID" },
+                    { "data": "FilterID" ,
+                        "render": function (data, type, row) {
+                            var estado = row.State.Name;
+                            var url;
+                            if (estado != "Cerrado") {
+                                url = '@Html.ActionLink("Edit", "Edit", new { id= 1})';
+                            }
+                            else {
+                              url = '@Html.ActionLink(" ", "", new { id= 1})';
+                            }
+                            return url.replace('1',data);
+                        }},
                     { "data": "FilterID"},
                 ],
                 columnDefs: [
@@ -71,14 +82,14 @@
                         return url.replace('1',data);
                         }
                     },
-                    {
+                    @*{
                     targets: 10,
                         render: function (data, type, row) {
                             var url;
-                                url= '@Html.ActionLink("Edit", "Edit", new { id=1 })';
+                                url = '@Html.ActionLink("Edit", "Edit", new { id=1 })';
                             return url.replace('1',data);
                         }
-                    },
+                    },*@
                     {
                         targets: 8,
                         visible:false
