@@ -26,16 +26,6 @@ namespace DynamicFilter.Controllers
         {
             if (Session["UserID"] != null)
             {
-                //int UserId = Convert.ToInt32(Session["UserID"]);
-                //int RoleId = Convert.ToInt32(Session["RoleID"]);
-
-                //var filters = db.Filters
-                //    .Include(f => f.Category)
-                //    .Include(f => f.Type)                    
-                //    .Where(x => x.Enable == 
-                //    true && (x.CreatedBy == UserId || RoleId==1)
-                //    ).OrderByDescending(x => x.FilterID);
-                //return View(filters.ToList());
                 return View();
             }
             else
@@ -92,137 +82,6 @@ namespace DynamicFilter.Controllers
             ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Name", filter.TypeID);
             ViewBag.StateID = new SelectList(db.States, "StateID", "Name", filter.StateID);
             return View(filter);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> CreateTicketAndUser(Ticket ticket)
-        {
-            var response = new { issuccess = false, message = ""};
-
-            try
-            {
-                if (!await ValidateAndInsertOrUpdateUser(ticket.User))
-                {
-                    response = new{ issuccess = false, message = "Error al validar usuario"};
-                    return Json(response, JsonRequestBehavior.AllowGet);
-                }
-
-                if(!await createTicket(ticket.Filter))
-                {
-                    response = new { issuccess = false, message = "Error al registrar consulta"};
-                    return Json(response, JsonRequestBehavior.AllowGet);
-                }
-
-                response = new { issuccess = true, message = "Consulta registrada correctamente"};
-                return Json(response, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                response = new{ issuccess = false, message = ex.Message };
-                return Json(response, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        private async Task<bool> createTicket(Models.Filter filter)
-        {
-            try
-            {
-                filter.Enable = true;
-                filter.CreatedOn = DateTime.Today;
-                filter.CategoryID = 4;
-                db.Filters.Add(filter);
-                await db.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-        private async Task<bool> ValidateAndInsertOrUpdateUser(Models.User user)
-        {
-            try
-            {
-                var proveedor = db.Users.Where(x => x.UserName == user.UserName).FirstOrDefault();
-                if (proveedor == null )
-                {
-                    user.Enable = true;
-                    user.Password = string.Empty;
-                    user.RoleID = 2;
-                    db.Users.Add(user);
-                    await db.SaveChangesAsync();
-                    return true;
-                }
-                else
-                {
-                    Models.User usuario = db.Users.Where(x => x.UserName == user.UserName).FirstOrDefault();
-                    db.Entry(usuario).State = EntityState.Modified;
-                    usuario.UserName = user.UserName;
-                    usuario.ProveedorID = user.ProveedorID;
-                    usuario.ProviderName = user.ProviderName;
-                    usuario.ContactPerson = user.ContactPerson;
-                    await db.SaveChangesAsync();
-                    return true;
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create_Ticket([Bind(Include = "Description,Place,Detail,CategoryID,TypeID,CreatedBy,StateID,UserName")] Models.Filter filter)
-        {
-            
-           // string UserName = filter.User.UserName.ToString();
-            if (ModelState.IsValid)
-            {
-                filter.Enable = true;
-                filter.CreatedOn = DateTime.Today;
-                db.Filters.Add(filter);
-                await db.SaveChangesAsync();
-                return new HttpStatusCodeResult(HttpStatusCode.Created);
-            }
-            else
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-        }
-
-        /// <summary>
-        /// Creacion de Metodo Create_Proveedor
-        /// </summary>
-        [HttpPost]
-        public async Task<ActionResult> Create_Proveedor([Bind(Include = "Password, Enable, RoleID, UserName, ProveedorID")] Models.User user)
-        {
-            if (ModelState.IsValid)
-            {
-                var proveedor = db.Users.Where(x => x.UserName == user.UserName).FirstOrDefault();
-                if (proveedor == null)
-                {
-                    db.Users.Add(user);
-                    await db.SaveChangesAsync();
-                    return new HttpStatusCodeResult(HttpStatusCode.Created);
-                }
-                else
-                {
-                    Models.User usuario = db.Users.Find(proveedor.UserID);
-                    usuario.Password = user.Password;
-                    usuario.Enable = user.Enable;
-                    usuario.RoleID = user.RoleID;
-                    usuario.UserName = user.UserName;
-                    usuario.ProveedorID = user.ProveedorID;
-                    db.Entry(usuario).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
-                    return new HttpStatusCodeResult(HttpStatusCode.OK);
-                }
-            }
-            else
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
-            }
         }
 
         // GET: Filters/Edit/5
@@ -324,12 +183,12 @@ namespace DynamicFilter.Controllers
         public JsonResult Get()
         {
             
-                int UserId = Session["UserID"]==null ?0: Convert.ToInt32(Session["UserID"]);
+            int UserId = Session["UserID"]==null ?0: Convert.ToInt32(Session["UserID"]);
             int RoleId = Convert.ToInt32(Session["RoleID"]);
 
             var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").
                     Where(x => x.Enable == true 
-                    &&( x.CreatedBy==UserId || RoleId==1 )
+                    &&( x.CreatedBy==UserId)
                     )
                     .OrderByDescending(x=>x.FilterID) .ToList();
               
