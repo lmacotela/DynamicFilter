@@ -76,6 +76,9 @@
     <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -136,14 +139,17 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\FiltersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\StateController.cs" />
+    <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\TypesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DTO\Ticket.cs" />
+    <Compile Include="DTO\Ticket_Response_v1.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -194,6 +200,10 @@
     <Compile Include="Migrations\202005252031171_v12_MoreFields.cs" />
     <Compile Include="Migrations\202005252031171_v12_MoreFields.Designer.cs">
       <DependentUpon>202005252031171_v12_MoreFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005252331401_v13_MoreFields.cs" />
+    <Compile Include="Migrations\202005252331401_v13_MoreFields.Designer.cs">
+      <DependentUpon>202005252331401_v13_MoreFields.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -329,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005252031171_v12_MoreFields.resx">
       <DependentUpon>202005252031171_v12_MoreFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005252331401_v13_MoreFields.resx">
+      <DependentUpon>202005252331401_v13_MoreFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,6 +9,7 @@ namespace DynamicFilter.Models
     {
         public int TypeID { get; set; }
         public string Name { get; set; }
+        public string NameEN { get; set; }
         public bool Enable { get; set; }
     }
 }       
