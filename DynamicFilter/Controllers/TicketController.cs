@@ -62,7 +62,7 @@ namespace DynamicFilter.Controllers
             {
                 filter.Enable = true;
                 filter.CreatedOn = DateTime.Today;
-                filter.CategoryID = 2;
+                filter.CategoryID = 1;
                 filter.StateID = 1;
                 db.Filters.Add(filter);
                 await db.SaveChangesAsync();
