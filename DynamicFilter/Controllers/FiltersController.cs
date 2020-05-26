@@ -336,6 +336,7 @@ namespace DynamicFilter.Controllers
             Mensaje.To.Add(new MailAddress(WebConfigurationManager.AppSettings["UsuarioEnvio"]));
             Mensaje.From = new MailAddress(WebConfigurationManager.AppSettings["AdminUser"]);
             Mensaje.Subject = WebConfigurationManager.AppSettings["Subject"];
+            var link=WebConfigurationManager.AppSettings["link"];
             string htmlString = @"<html>
                       <body>
                       <p>Dear: " + filter.User.ContactPerson.ToString() + "</p>" +
@@ -343,6 +344,11 @@ namespace DynamicFilter.Controllers
                       "<p>Sugerencia Alimentos: " + filter.Category.Name.ToString() + "</p>"+
                       "<p>Category: " + filter.Type.Name.ToString() + "</p>"+
                       "<p>Estado: " + filter.State.Name.ToString() + "</p>" +
+                      "<p>Asunto: " + filter.Place.ToString() + "</p>" +
+                      "<p></p>" +
+
+                      "<p></p>" +
+                      "<p>Consulta: <a href='" + link.ToString()+ "' target='_blank'>Aqui</a></p>" +
                       "</body>" +
                       "</html>";
            /* string strMensaje = string.Format("Ticket No.: {1}{0}Sugerencia Alimentos: {2}{0}Category: {3}{0}Contact Name: {4}{0}",
