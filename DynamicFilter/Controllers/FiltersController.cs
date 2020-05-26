@@ -329,7 +329,6 @@ namespace DynamicFilter.Controllers
 
             var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").
                     Where(x => x.Enable == true 
-                    &&( x.CreatedBy==UserId || RoleId==1 )
                     )
                     .OrderByDescending(x=>x.FilterID) .ToList();
               
