@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DynamicFilter.Models;
 
 namespace DynamicFilter.Controllers
@@ -36,6 +37,7 @@ namespace DynamicFilter.Controllers
         public ActionResult Login()
         {
             Session.Clear();
+            FormsAuthentication.SignOut();
             return View();
         }
 

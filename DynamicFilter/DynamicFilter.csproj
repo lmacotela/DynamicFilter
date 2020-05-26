@@ -144,7 +144,6 @@
     <Compile Include="Controllers\TypesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DTO\Ticket.cs" />
-    <Compile Include="DTO\UserFilterDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -195,6 +194,10 @@
     <Compile Include="Migrations\202005252031171_v12_MoreFields.cs" />
     <Compile Include="Migrations\202005252031171_v12_MoreFields.Designer.cs">
       <DependentUpon>202005252031171_v12_MoreFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005260040200_v13.cs" />
+    <Compile Include="Migrations\202005260040200_v13.Designer.cs">
+      <DependentUpon>202005260040200_v13.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -330,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005252031171_v12_MoreFields.resx">
       <DependentUpon>202005252031171_v12_MoreFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005260040200_v13.resx">
+      <DependentUpon>202005260040200_v13.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
