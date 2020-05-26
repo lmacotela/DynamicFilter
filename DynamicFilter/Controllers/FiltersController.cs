@@ -13,6 +13,8 @@ using System.Web.Mvc;
 using DynamicFilter.DTO;
 using DynamicFilter.Models;
 using Microsoft.Ajax.Utilities;
+using System.Net.Mail;
+using System.Web.Configuration;
 
 namespace DynamicFilter.Controllers
 {
@@ -75,22 +77,31 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID,StateID")] Models.Filter filter)
+        public async Task<ActionResult> Create([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID,StateID")] Models.Filter filter)
         {
             if (ModelState.IsValid)
             {
+                var id = filter.FilterID.ToString();
+                Ticket ticket = new Ticket();
                 filter.Enable = true;
                 filter.CreatedOn = DateTime.Today;
                 filter.CreatedBy = Convert.ToInt32(Session["UserID"]);
                 filter.StateID = 1;
+                //ticket.Filter.Category.Name = "Prueba";
+
                 db.Filters.Add(filter);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
+                var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").Where(x => x.Enable == true && x.FilterID==filter.FilterID)
+                    .OrderByDescending(x => x.FilterID).FirstOrDefault();
+                
+                await SendMail(list);
                 return RedirectToAction("Index");
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", filter.CategoryID);
             ViewBag.TypeID = new SelectList(db.Types, "TypeID", "Name", filter.TypeID);
             ViewBag.StateID = new SelectList(db.States, "StateID", "Name", filter.StateID);
+           
             return View(filter);
         }
 
@@ -112,7 +123,7 @@ namespace DynamicFilter.Controllers
                     response = new { issuccess = false, message = "Error al registrar consulta"};
                     return Json(response, JsonRequestBehavior.AllowGet);
                 }
-
+               // await SendMail("Se Genero", ticket);
                 response = new { issuccess = true, message = "Consulta registrada correctamente"};
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
@@ -319,8 +330,43 @@ namespace DynamicFilter.Controllers
         }
 
 
+        public static async Task SendMail(Models.Filter filter)
+        {
+            var Mensaje = new MailMessage();
+            Mensaje.To.Add(new MailAddress(WebConfigurationManager.AppSettings["UsuarioEnvio"]));
+            Mensaje.From = new MailAddress(WebConfigurationManager.AppSettings["AdminUser"]);
+            Mensaje.Subject = WebConfigurationManager.AppSettings["Subject"];
+            string htmlString = @"<html>
+                      <body>
+                      <p>Dear: " + filter.User.ContactPerson.ToString() + "</p>" +
+                      "<p>Ticket No.: " + filter.FilterID.ToString()+"</p>"+
+                      "<p>Sugerencia Alimentos: " + filter.Category.Name.ToString() + "</p>"+
+                      "<p>Category: " + filter.Type.Name.ToString() + "</p>"+
+                      "<p>Estado: " + filter.State.Name.ToString() + "</p>" +
+                      "</body>" +
+                      "</html>";
+           /* string strMensaje = string.Format("Ticket No.: {1}{0}Sugerencia Alimentos: {2}{0}Category: {3}{0}Contact Name: {4}{0}",
+                Environment.NewLine, filter.FilterID.ToString(),
+                filter.Category.Name.ToString(), filter.Type.Name.ToString(), filter.User.ContactPerson.ToString());*/
+            Mensaje.Body = htmlString;
+            Mensaje.IsBodyHtml = true;
+            using (var smtp = new SmtpClient())
+            {
+                var credencial = new NetworkCredential
+                {
+                    UserName = WebConfigurationManager.AppSettings["AdminUser"],
+                    Password = WebConfigurationManager.AppSettings["AdminPassword"],
+                };
 
-        [HttpPost]
+                smtp.Credentials = credencial;
+                smtp.Host = WebConfigurationManager.AppSettings["SMTPName"];
+                smtp.Port = int.Parse(WebConfigurationManager.AppSettings["SMTPPort"]);
+                smtp.EnableSsl = true;
+                await smtp.SendMailAsync(Mensaje);
+
+            }
+        }
+            [HttpPost]
         public JsonResult Get()
         {
             
