@@ -351,9 +351,6 @@ namespace DynamicFilter.Controllers
                       "<p>Consulta: <a href='" + link.ToString()+ "' target='_blank'>Aqui</a></p>" +
                       "</body>" +
                       "</html>";
-           /* string strMensaje = string.Format("Ticket No.: {1}{0}Sugerencia Alimentos: {2}{0}Category: {3}{0}Contact Name: {4}{0}",
-                Environment.NewLine, filter.FilterID.ToString(),
-                filter.Category.Name.ToString(), filter.Type.Name.ToString(), filter.User.ContactPerson.ToString());*/
             Mensaje.Body = htmlString;
             Mensaje.IsBodyHtml = true;
             using (var smtp = new SmtpClient())
