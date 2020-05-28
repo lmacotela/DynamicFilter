@@ -54,7 +54,7 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TypeID,Name")] Models.Type type)
+        public ActionResult Create([Bind(Include = "TypeID,Name,NameEN")] Models.Type type)
         {
             if (ModelState.IsValid)
             {
@@ -87,10 +87,11 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TypeID,Name")] Models.Type type)
+        public ActionResult Edit([Bind(Include = "TypeID,Name,NameEN")] Models.Type type)
         {
             if (ModelState.IsValid)
             {
+                type.Enable = true;
                 db.Entry(type).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
