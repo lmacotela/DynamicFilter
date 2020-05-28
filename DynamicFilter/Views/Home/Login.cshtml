@@ -1,203 +1,130 @@
-﻿
-@model DynamicFilter.Models.User
-
+﻿@model DynamicFilter.Models.User
 @{
-    ViewBag.Title = "Login";
     Layout = null;
 }
-<style>
-    body {font-family: Arial, Helvetica, sans-serif;}
 
-/* Full-width input fields */
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-/* Set a style for all buttons */
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-  width: auto;
-  padding: 10px 18px;
-  background-color: #f44336;
-}
-
-/* Center the image and position the close button */
-.imgcontainer {
-  text-align: center;
-  margin: 24px 0 12px 0;
-  position: relative;
-}
-
-img.avatar {
-  width: 40%;
-  border-radius: 50%;
-}
-
-.container {
-  padding: 16px;
-}
-
-span.psw {
-  float: right;
-  padding-top: 16px;
-}
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  padding-top: 60px;
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button (x) */
-.close {
-  position: absolute;
-  right: 25px;
-  top: 0;
-  color: #000;
-  font-size: 35px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: red;
-  cursor: pointer;
-}
-
-/* Add Zoom Animation */
-.animate {
-  -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s
-}
-
-@@-webkit-keyframes animatezoom {
-  from {-webkit-transform: scale(0)} 
-  to {-webkit-transform: scale(1)}
-}
-  
-@@keyframes animatezoom {
-  from {transform: scale(0)} 
-  to {transform: scale(1)}
-}
-
-/* Change styles for span and cancel button on extra small screens */
-@@media screen and (max-width: 300px) {
-  span.psw {
-     display: block;
-     float: none;
-  }
-  .cancelbtn {
-     width: 100%;
-  }
-}
-
-.center {
-  margin: auto;
-  width: 50%;
-  border: 3px solid green;
-  padding: 10px;
-}
-</style>
-
-
-
-
-<div class="center">
+<!DOCTYPE html>
+@*<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Supplier Registration</title>
+        <link rel="stylesheet" href="/css/master.css">
+    </head>
+    <body>
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="login-box">
+                <img src="~/img/miwic-logo.png" class="avatar" alt="Avatar Image">
+                <h1>Supplier registration</h1>
+                <form>
+                     USERNAME INPUT
+                    <label for="username">Username</label>
+                    <span _ngcontent-ghm-c38="" class="input-group-text"><i _ngcontent-ghm-c38="" class="fas fa-user"></i></span>
+                    <input type="text" placeholder="Enter Username" name="UserName">
+                     PASSWORD INPUT
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Enter Password" name="Password">
+                    <input type="submit" value="Log In">
+                </form>
+            </div>
+        }
+    </body>
+    </html>*@
+<html lang="en">
+<head>
+    <title>Login V3</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/img/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
     @using (Html.BeginForm("Login", "Home", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
-        <div class="imgcontainer">
-            <img src="~/Images/img_avatar2.png" alt="Avatar" class="avatar">
+        <div class="limiter">
+            <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+                <div class="wrap-login100">
+                    <form class="login100-form validate-form">
+                        <span class="login100-form-logo">
+                            <img src="~/img/miwic-logo.png" />
+                        </span>
+
+                        <span class="login100-form-title p-b-34 p-t-27">
+                            Log in
+                        </span>
+
+                        <div class="wrap-input100 validate-input" data-validate="Enter username">
+                            <input class="input100" type="text" name="UserName" placeholder="Username" value="">
+                            <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input" data-validate="Enter password">
+                            <input class="input100" type="password" name="Password" placeholder="Password" value="">
+                            <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                        </div>
+
+                        <div class="contact100-form-checkbox">
+                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                            <label class="label-checkbox100" for="ckb1">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div class="container-login100-form-btn">
+                            <button class="login100-form-btn" type="submit">
+                                Login
+                            </button>
+                        </div>
+
+    
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <div class="container">
-            <label for="UserName"><b>UserName</b></label>
-            <input type="text" placeholder="Enter Username" name="UserName" required>
 
-            <label for="Password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="Password" required>
+        <div id="dropDownSelect1"></div>
 
-            <button type="submit">Login</button>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-        </div>
-
-        @*<div class="container" style="background-color: #f1f1f1">
-                <button type="button" class="cancelbtn">Cancel</button>
-                <span class="psw">Forgot <a href="#">password?</a></span>
-            </div>*@
-        @*<fieldset>
-                <legend>Mvc Simple Login Application Demo</legend>
-
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
-
-                <table>
-                    <tr>
-                        <td>@Html.LabelFor(a => a.UserName)</td>
-                        <td>@Html.TextBoxFor(a => a.UserName)</td>
-                        <td>@Html.ValidationMessageFor(a => a.UserName)</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.      (a => a.Password)
-                        </td>
-                        <td>
-                            @Html.PasswordFor(a => a.Password)
-                        </td>
-                        <td>
-                            @Html.ValidationMessageFor(a => a.Password)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="submit" value="Login" />
-                        </td>
-                        <td></td>
-                    </tr>
-                </table>
-            </fieldset>*@
+        <!--===============================================================================================-->
+        <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/bootstrap/js/popper.js"></script>
+        <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/select2/select2.min.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/daterangepicker/moment.min.js"></script>
+        <script src="~/vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/vendor/countdowntime/countdowntime.js"></script>
+        <!--===============================================================================================-->
+        <script src="~/js/main.js"></script>
     }
-</div>
-
-
-
+    </body>
+</html>

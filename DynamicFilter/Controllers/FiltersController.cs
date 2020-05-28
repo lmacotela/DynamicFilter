@@ -259,15 +259,16 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID,StateID")] Models.Filter filter,
+        public async Task<ActionResult> Edit([Bind(Include = "FilterID,Description,Place,Detail,CategoryID,TypeID,StateID")] Models.Filter filter,
             string enviar
             )
         {
             if (ModelState.IsValid)
             {
+                var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").Where(x => x.Enable == true && x.FilterID == filter.FilterID)
+               .OrderByDescending(x => x.FilterID).FirstOrDefault();
                 Models.Filter model = db.Filters.Find(filter.FilterID);
 
-                model.Description = filter.Description;
                 model.Place = filter.Place;
                 model.Detail = filter.Detail;
                 model.CategoryID = filter.CategoryID;
@@ -279,10 +280,14 @@ namespace DynamicFilter.Controllers
                 else
                 {
                     model.StateID = 3;
+               
+                    list.State.Name = "Cerrado";
+                    await SendMail(list);
                 }
                                 
                 db.Entry(model).State = EntityState.Modified;                                
-                db.SaveChanges();
+                await db.SaveChangesAsync();
+                ViewBag.StateID = new SelectList(db.States, "StateID", "Name", filter.StateID);
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryID = new SelectList(db.Categories.Where(x=>x.Enable==true), "CategoryID", "Name", filter.CategoryID);
@@ -333,7 +338,10 @@ namespace DynamicFilter.Controllers
         public static async Task SendMail(Models.Filter filter)
         {
             var Mensaje = new MailMessage();
-            Mensaje.To.Add(new MailAddress(WebConfigurationManager.AppSettings["UsuarioEnvio"]));
+            var to = filter.User.Email.ToString();
+            var cc = WebConfigurationManager.AppSettings["UsuarioEnvio"].ToString();
+            Mensaje.To.Add(to);
+            Mensaje.CC.Add(cc);
             Mensaje.From = new MailAddress(WebConfigurationManager.AppSettings["AdminUser"]);
             Mensaje.Subject = WebConfigurationManager.AppSettings["Subject"];
             var link=WebConfigurationManager.AppSettings["link"];
