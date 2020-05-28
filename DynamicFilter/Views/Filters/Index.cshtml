@@ -19,6 +19,7 @@
                 <th>Ticket</th>
                 <th>Application</th>
                 <th>Function</th>
+                <th>FunctionEN</th>
                 <th>State</th>
                 <th>Title</th>
                 <th>Description</th>
@@ -48,11 +49,12 @@
                     "url": "@Url.Action("Get","Filters")",
                     "type": "POST"
                 },
-                "order": [[3, "desc"]],
+                "order": [[4, "desc"]],
                 "columns": [
                     { "data": "FilterID" },
                     { "data": "Category.Name" },
                     { "data": "Type.Name" },
+                    { "data": "Type.NameEN" },
                     { "data": "State.Name" },
                     { "data": "Place" },
                     {
@@ -96,7 +98,7 @@
                 ],
                 columnDefs: [
                     {
-                        targets: 11,
+                        targets: 12,
                         visible: false,
                         render: function (data, type, row) {
                         var url = '@Html.ActionLink("Delete", "Delete", new { id=1 })';
@@ -112,7 +114,7 @@
                         }
                     },*@
                     {
-                        targets: 8,
+                        targets: 9,
                         visible:false
                     },
                     //{
@@ -129,7 +131,7 @@
 
                     //},
                     {
-                    targets: 4,
+                    targets: 5,
                         render: function (data, type, row) {
 
                             if (data!=null) {
@@ -142,7 +144,7 @@
                         }
                     },
                     {
-                        targets: 6,
+                        targets: 7,
                         visible: false
                     },
                  ]
