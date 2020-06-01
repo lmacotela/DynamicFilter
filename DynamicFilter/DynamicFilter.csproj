@@ -205,6 +205,10 @@
     <Compile Include="Migrations\202005252331401_v13_MoreFields.Designer.cs">
       <DependentUpon>202005252331401_v13_MoreFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006011711277_v14_MoreFields.cs" />
+    <Compile Include="Migrations\202006011711277_v14_MoreFields.Designer.cs">
+      <DependentUpon>202006011711277_v14_MoreFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DataContext.cs" />
@@ -307,6 +311,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="vendor\animate\animate.css" />
     <Content Include="vendor\animsition\css\animsition.css" />
     <Content Include="vendor\animsition\css\animsition.min.css" />
@@ -445,6 +450,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005252331401_v13_MoreFields.resx">
       <DependentUpon>202005252331401_v13_MoreFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006011711277_v14_MoreFields.resx">
+      <DependentUpon>202006011711277_v14_MoreFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -87,6 +87,7 @@ namespace DynamicFilter.Controllers
                 filter.CreatedOn = DateTime.Today;
                 filter.CreatedBy = Convert.ToInt32(Session["UserID"]);
                 filter.StateID = 1;
+                filter.UpdateOn = DateTime.Parse("1900-01-01 00:00:00.000");
                 //ticket.Filter.Category.Name = "Prueba";
 
                 db.Filters.Add(filter);
@@ -273,6 +274,7 @@ namespace DynamicFilter.Controllers
                 model.Detail = filter.Detail;
                 model.CategoryID = filter.CategoryID;
                 model.TypeID = filter.TypeID;
+                model.UpdateOn = DateTime.Today;
                 if(enviar=="Save")
                 {
                     model.StateID = 2;
@@ -339,7 +341,17 @@ namespace DynamicFilter.Controllers
         {
             var Mensaje = new MailMessage();
             var to = filter.User.Email.ToString();
+            var UserFunction01= WebConfigurationManager.AppSettings["UsuarioFunction01"].ToString();
+            var UserFunction02 = WebConfigurationManager.AppSettings["UsuarioFunction02"].ToString();
             var cc = WebConfigurationManager.AppSettings["UsuarioEnvio"].ToString();
+            if(filter.Type.TypeID==1)
+            {
+                cc = UserFunction01 +", " + UserFunction02;
+            }
+            else if(filter.Type.TypeID == 2)
+            {
+                cc = UserFunction02 +", " + UserFunction01;
+            }
             Mensaje.To.Add(to);
             Mensaje.CC.Add(cc);
             Mensaje.From = new MailAddress(WebConfigurationManager.AppSettings["AdminUser"]);
@@ -385,9 +397,9 @@ namespace DynamicFilter.Controllers
             int RoleId = Convert.ToInt32(Session["RoleID"]);
 
             var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").
-                    Where(x => x.Enable == true)
-                    .OrderByDescending(x=>x.FilterID).ToList();
-              
+                    Where(x => x.Enable == true).
+                    OrderByDescending(x => x.FilterID).ToList();
+
                 return Json(new
                 {
                     draw = 1,

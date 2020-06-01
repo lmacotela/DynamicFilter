@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<DynamicFilter.Models.Filter>
 
+    <script src="~/Scripts/moment.js"></script>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,12 +22,14 @@
                 <th>Function</th>
                 <th>FunctionEN</th>
                 <th>State</th>
+                <th>Update Date</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Description2</th>
                 <th>Solution</th>
                 <th>Detail2</th>
                 <th>CreatedBy</th>
+                <th>Creation Date</th>
                 <th>Edit</th>
                 <th hidden="hidden">Delete</th>
             </tr>
@@ -41,7 +44,7 @@
 
             //var table = $('#example').DataTable();
             //table.destroy();
-
+            //$.fn.dataTable.moment('M/D/YYYY');
             $('#example').DataTable({
                 "processing": true,
                 "serverSide": false,
@@ -54,11 +57,27 @@
                     { "data": "FilterID" },
                     { "data": "Category.Name" },
                     { "data": "Type.Name" },
-                    { "data": "Type.NameEN" },
+                    {
+                        "data": "Type.NameEN",
+                        "visible": false
+                        },
                     { "data": "State.Name" },
+                    {
+                        "data": "UpdateOn",
+                        "render": function (data) {
+                            var fecha;
+                            fecha = moment(data).format("MM/DD/YYYY");
+                            if (fecha == "12/31/1899") {
+                                fecha = "";
+                            }
+                            return fecha;
+
+                        }
+                    },
                     { "data": "Place" },
                     {
                         "data": "Description",
+                            
                         "render": function (data, type, row) {
                             if (data != null) {
                                 if (data.length > 21) {
@@ -68,7 +87,10 @@
                             return data;
                         }
                     },
-                    { "data": "Description" },
+                    {
+                        "data": "Description",
+                        "visible": false
+                    },
                     {
                         "data": "Detail",
                         "render": function (data, type, row) {
@@ -80,8 +102,20 @@
                             return data;
                         }
                     },
-                    { "data": "Detail" },
+                    {
+                        "data": "Detail",
+                        "visible": false
+                    },
                     { "data": "User.UserName" },
+                    {
+                        "data": "CreatedOn",
+                        "render": function (data) {
+                            var fecha;
+                            fecha = moment(data).format("MM/DD/YYYY");
+                            return fecha;
+
+                        }
+                    },
                     { "data": "FilterID" ,
                         "render": function (data, type, row) {
                             var estado = row.State.Name;
@@ -94,17 +128,24 @@
                             }
                             return url.replace('1',data);
                         }},
-                    { "data": "FilterID"},
+                    {
+                        "data": "FilterID",
+                        "visible": false,
+                        "render": function (data) {
+                            var url = '@Html.ActionLink("Delete", "Delete", new { id=1 })';
+                            return url.replace('1', data);
+                        }
+                    },
                 ],
                 columnDefs: [
-                    {
-                        targets: 12,
+                    @*{
+                        targets: 13,
                         visible: false,
                         render: function (data, type, row) {
                         var url = '@Html.ActionLink("Delete", "Delete", new { id=1 })';
                         return url.replace('1',data);
                         }
-                    },
+                    },*@
                     @*{
                     targets: 10,
                         render: function (data, type, row) {
@@ -113,10 +154,10 @@
                             return url.replace('1',data);
                         }
                     },*@
-                    {
-                        targets: 9,
-                        visible:false
-                    },
+                    //{
+                    //    targets: 9,
+                    //    visible:false
+                    //},
                     //{
                     //targets: 7,
                     //    render: function (data, type, row) {
@@ -130,23 +171,32 @@
                     //    }
 
                     //},
-                    {
-                    targets: 5,
-                        render: function (data, type, row) {
+                    //{
+                    //targets: 5,
+                    //    render: function (data, type, row) {
 
-                            if (data!=null) {
-                                if (data.length > 21) {
-                                data=data.substr(0, 21) + '…';
-                            }
-                            }
+                    //        if (data!=null) {
+                    //            if (data.length > 21) {
+                    //            data=data.substr(0, 21) + '…';
+                    //        }
+                    //        }
 
-                            return data;
-                        }
-                    },
-                    {
-                        targets: 7,
-                        visible: false
-                    },
+                    //        return data;
+                    //    }
+                    //},
+                    //{
+                    //    targets: 7,
+                    //    visible: false
+                    //},
+                    //{
+                    //    targets: 11,
+                    //    render: function (data) {
+                    //        data = data.format('DD-MM-YYYY | HH:mm');
+                    //        alert(data);
+                    //        format: 'M/D/YYYY';
+                    //        return data;
+                    //    }
+                    //},
                  ]
             });
             });

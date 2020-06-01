@@ -88,10 +88,11 @@ namespace DynamicFilter.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryID,Name")] Category category)
+        public ActionResult Edit([Bind(Include = "CategoryID,Name,Enable")] Category category)
         {
             if (ModelState.IsValid)
             {
+                category.Enable = true;
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -21,8 +21,6 @@ namespace DynamicFilter.Models
         public string Detail { get; set; }
         public DateTime CreatedOn { get; set; }
         
-
-
         public int CreatedBy { get; set; }
 
         [ForeignKey("CreatedBy")]
@@ -41,5 +39,6 @@ namespace DynamicFilter.Models
         public int StateID { get; set; }
         public State State { get; set; }
 
+        public DateTime UpdateOn { get; set; }
     }
 }
