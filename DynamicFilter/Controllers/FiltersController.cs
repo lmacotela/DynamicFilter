@@ -55,11 +55,13 @@ namespace DynamicFilter.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Models.Filter filter = db.Filters.Find(id);
+            var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").Where(x => x.Enable == true && x.FilterID == filter.FilterID)
+                .OrderByDescending(x => x.FilterID).FirstOrDefault();
             if (filter == null)
             {
                 return HttpNotFound();
             }
-            return View(filter);
+            return View(list);
         }
 
         // GET: Filters/Create
@@ -142,6 +144,7 @@ namespace DynamicFilter.Controllers
                 filter.Enable = true;
                 filter.CreatedOn = DateTime.Today;
                 filter.CategoryID = 4;
+                filter.UpdateOn = DateTime.Parse("1900-01-01 00:00:00.000");
                 db.Filters.Add(filter);
                 await db.SaveChangesAsync();
                 return true;
@@ -193,6 +196,7 @@ namespace DynamicFilter.Controllers
             {
                 filter.Enable = true;
                 filter.CreatedOn = DateTime.Today;
+                filter.UpdateOn = DateTime.Parse("1900-01-01 00:00:00.000");
                 db.Filters.Add(filter);
                 await db.SaveChangesAsync();
                 return new HttpStatusCodeResult(HttpStatusCode.Created);
@@ -344,31 +348,39 @@ namespace DynamicFilter.Controllers
             var UserFunction01= WebConfigurationManager.AppSettings["UsuarioFunction01"].ToString();
             var UserFunction02 = WebConfigurationManager.AppSettings["UsuarioFunction02"].ToString();
             var cc = WebConfigurationManager.AppSettings["UsuarioEnvio"].ToString();
-            if(filter.Type.TypeID==1)
+            var subject= WebConfigurationManager.AppSettings["Subject"].ToString();
+            if (filter.Type.TypeID==1)
             {
-                cc = UserFunction01 +", " + UserFunction02;
+                to = to + ", " + UserFunction01;
+                cc =  UserFunction02;
             }
             else if(filter.Type.TypeID == 2)
             {
-                cc = UserFunction02 +", " + UserFunction01;
+                to = to + ", " + UserFunction02;
+                cc = UserFunction01;
             }
             Mensaje.To.Add(to);
+            Mensaje.Subject = subject + " - Ticket No." + filter.FilterID;
             Mensaje.CC.Add(cc);
             Mensaje.From = new MailAddress(WebConfigurationManager.AppSettings["AdminUser"]);
-            Mensaje.Subject = WebConfigurationManager.AppSettings["Subject"];
+            
             var link=WebConfigurationManager.AppSettings["link"];
             string htmlString = @"<html>
                       <body>
-                      <p>Dear: " + filter.User.ContactPerson.ToString() + "</p>" +
+                      <p>Estimado: " + filter.User.ContactPerson.ToString() + "</p>" +
                       "<p>Ticket No.: " + filter.FilterID.ToString()+"</p>"+
-                      "<p>Sugerencia Alimentos: " + filter.Category.Name.ToString() + "</p>"+
-                      "<p>Category: " + filter.Type.Name.ToString() + "</p>"+
+                      //"<p>Sugerencia Alimentos: " + filter.Category.Name.ToString() + "</p>"+
+                      "<p>Proceso de Selección de Alimentos</p>" +
+                      "<p>Categoria: " + filter.Type.Name.ToString() + "</p>"+
                       "<p>Estado: " + filter.State.Name.ToString() + "</p>" +
                       "<p>Asunto: " + filter.Place.ToString() + "</p>" +
                       "<p></p>" +
-
                       "<p></p>" +
-                      "<p>Consulta: <a href='" + link.ToString()+ "' target='_blank'>Aqui</a></p>" +
+                      "<p></p>" +
+                      "<p></p>" +
+                      //"<p>Consulta: <a href='" + link.ToString()+ "' target='_blank'>Aqui</a></p>" +
+                      "<p>Descripción: " + filter.Description+ "</p>" +
+                      "<p>Solución:" + filter.Detail + "</p>" +
                       "</body>" +
                       "</html>";
             Mensaje.Body = htmlString;
@@ -398,7 +410,7 @@ namespace DynamicFilter.Controllers
 
             var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").
                     Where(x => x.Enable == true).
-                    OrderByDescending(x => x.FilterID).ToList();
+                    OrderBy(x => x.StateID).ThenBy(x=>x.FilterID).ToList();
 
                 return Json(new
                 {

@@ -12,7 +12,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Category.Name)
+            Application
         </dt>
 
         <dd>
@@ -20,12 +20,44 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Type.Name)
+            Function
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Type.Name)
         </dd>
+        <dt>
+            State
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State.Name)
+        </dd>
+
+        <dt>
+            Update Date
+        </dt>
+
+        <dd>
+            @{
+                var update = Model.UpdateOn;
+                string updateOn= update.ToString();
+                if (update <= DateTime.Parse("1900-01-01 00:00:00.000"))
+                {
+                    update = null;
+                    @Html.DisplayFor(model => update)
+
+                }
+                else
+                {
+                    DateTime fechanueva = DateTime.Parse(updateOn);
+                    string fechanueva2=fechanueva.ToShortDateString();
+                    @Html.DisplayFor(model => fechanueva2)
+                }
+            }
+
+        </dd>
+
 
         <dt>
             @Html.DisplayNameFor(model => model.Description)
@@ -52,19 +84,13 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CreatedOn)
+            Create Date
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Enable)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Enable)
+            @{
+                var Fecha = Model.CreatedOn.ToShortDateString();
+            }
+            @Html.DisplayFor(model => Fecha)
         </dd>
 
     </dl>

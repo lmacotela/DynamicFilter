@@ -32,6 +32,7 @@
                 <th>Creation Date</th>
                 <th>Edit</th>
                 <th hidden="hidden">Delete</th>
+                <th>Detail</th>
             </tr>
         </thead>
     </table>
@@ -52,7 +53,7 @@
                     "url": "@Url.Action("Get","Filters")",
                     "type": "POST"
                 },
-                "order": [[4, "desc"]],
+                "order": [[1, "desc"]],
                 "columns": [
                     { "data": "FilterID" },
                     { "data": "Category.Name" },
@@ -67,7 +68,7 @@
                         "render": function (data) {
                             var fecha;
                             fecha = moment(data).format("MM/DD/YYYY");
-                            if (fecha == "12/31/1899") {
+                            if (fecha == "12/31/1899" || data==null) {
                                 fecha = "";
                             }
                             return fecha;
@@ -77,7 +78,7 @@
                     { "data": "Place" },
                     {
                         "data": "Description",
-                            
+
                         "render": function (data, type, row) {
                             if (data != null) {
                                 if (data.length > 21) {
@@ -134,6 +135,13 @@
                         "render": function (data) {
                             var url = '@Html.ActionLink("Delete", "Delete", new { id=1 })';
                             return url.replace('1', data);
+                        }
+                    },
+                    {
+                        "data": "FilterID",
+                        "render": function (data) {
+                        var url = '@Html.ActionLink("Details", "Details", new { id=1 })';
+                        return url.replace('1',data);
                         }
                     },
                 ],

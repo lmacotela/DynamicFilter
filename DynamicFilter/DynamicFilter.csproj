@@ -209,6 +209,10 @@
     <Compile Include="Migrations\202006011711277_v14_MoreFields.Designer.cs">
       <DependentUpon>202006011711277_v14_MoreFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006011936143_v15_AlterFields.cs" />
+    <Compile Include="Migrations\202006011936143_v15_AlterFields.Designer.cs">
+      <DependentUpon>202006011936143_v15_AlterFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DataContext.cs" />
@@ -239,6 +243,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\img_avatar2.png" />
     <Content Include="img\miwic-logo.png" />
+    <Content Include="img\register.png" />
     <Content Include="js\main.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -453,6 +458,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006011711277_v14_MoreFields.resx">
       <DependentUpon>202006011711277_v14_MoreFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006011936143_v15_AlterFields.resx">
+      <DependentUpon>202006011936143_v15_AlterFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

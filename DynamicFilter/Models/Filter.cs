@@ -39,6 +39,6 @@ namespace DynamicFilter.Models
         public int StateID { get; set; }
         public State State { get; set; }
 
-        public DateTime UpdateOn { get; set; }
+        public DateTime? UpdateOn { get; set; }
     }
 }
