@@ -42,7 +42,7 @@
             @{
                 var update = Model.UpdateOn;
                 string updateOn= update.ToString();
-                if (update <= DateTime.Parse("1900-01-01 00:00:00.000"))
+                if (update <= DateTime.Parse("1900-01-01 00:00:00.000") || update==null)
                 {
                     update = null;
                     @Html.DisplayFor(model => update)
