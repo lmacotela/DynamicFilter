@@ -270,29 +270,43 @@ namespace DynamicFilter.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 var list = db.Filters.Include("Category").Include("Type").Include("State").Include("User").Where(x => x.Enable == true && x.FilterID == filter.FilterID)
                .OrderByDescending(x => x.FilterID).FirstOrDefault();
                 Models.Filter model = db.Filters.Find(filter.FilterID);
+
+                var state = model.StateID;
 
                 model.Place = filter.Place;
                 model.Detail = filter.Detail;
                 model.CategoryID = filter.CategoryID;
                 model.TypeID = filter.TypeID;
                 model.UpdateOn = DateTime.Today;
+
                 if(enviar=="Save")
                 {
                     model.StateID = 2;
+                    state = 2;
                 }
                 else
                 {
                     model.StateID = 3;
-               
                     list.State.Name = "Cerrado";
                     await SendMail(list);
+                    if(state==1)
+                    {
+                        model.State.Name = "Creado";
+                    }
+                    if(state==2)
+                    {
+                        model.State.Name = "En Proceso";
+                    }
+                    
                 }
-                                
-                db.Entry(model).State = EntityState.Modified;                                
+
+                db.Entry(model).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+
                 ViewBag.StateID = new SelectList(db.States, "StateID", "Name", filter.StateID);
                 return RedirectToAction("Index");
             }
