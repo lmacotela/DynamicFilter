@@ -205,14 +205,6 @@
     <Compile Include="Migrations\202005252331401_v13_MoreFields.Designer.cs">
       <DependentUpon>202005252331401_v13_MoreFields.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006011711277_v14_MoreFields.cs" />
-    <Compile Include="Migrations\202006011711277_v14_MoreFields.Designer.cs">
-      <DependentUpon>202006011711277_v14_MoreFields.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006011936143_v15_AlterFields.cs" />
-    <Compile Include="Migrations\202006011936143_v15_AlterFields.Designer.cs">
-      <DependentUpon>202006011936143_v15_AlterFields.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DataContext.cs" />
@@ -455,12 +447,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005252331401_v13_MoreFields.resx">
       <DependentUpon>202005252331401_v13_MoreFields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006011711277_v14_MoreFields.resx">
-      <DependentUpon>202006011711277_v14_MoreFields.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006011936143_v15_AlterFields.resx">
-      <DependentUpon>202006011936143_v15_AlterFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

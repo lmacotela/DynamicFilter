@@ -23,7 +23,7 @@ namespace DynamicFilter.Controllers
     {
         private DataContext db = new DataContext();
 
-        // GET: Filters  
+        // GET: Filters  DLM
         public ActionResult Index()
         {
             if (Session["UserID"] != null)
